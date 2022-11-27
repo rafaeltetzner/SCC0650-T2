@@ -7,10 +7,9 @@
 
 void Application::init()
 {
-    
     _win.init("O P E N G L - 3 D", 1280, 720);
 
-    _camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    _camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
     _win.set_key_callback([this](event::key::code code, event::key::action action)
     {
@@ -23,7 +22,7 @@ void Application::init()
     });
     _win.set_cursor_pos_callback([this](f64 x, f64 y)
     {
-        // this->_camera.process_cursor_movement(x, y);
+        this->_camera.process_cursor_movement(x, y);
     });
     _win.set_scroll_callback([](f64 offset)
     {
@@ -32,8 +31,7 @@ void Application::init()
     _win.show();
     _win.focus();
     _win.make_context();
-    // _win.grab_cursor();
-
+    _win.grab_cursor();
 }
 void Application::run()
 {

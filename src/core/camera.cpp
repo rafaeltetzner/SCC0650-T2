@@ -58,11 +58,17 @@ void Camera::process_key_input(event::key::code key, f32 dt)
 
 void Camera::process_cursor_movement(f32 x, f32 y)
 {
-    static f32 last_x = 0;
-    static f32 last_y = 0;
+    static f32 last_x = x;
+    static f32 last_y = y;
 
-    f32 xoffset = (x - last_x) * _sensitivity;
-    f32 yoffset = (y - last_y) * _sensitivity;
+    f32 xoffset = x - last_x;
+    f32 yoffset = last_y - y;
+    last_x = x;
+    last_y = y;
+
+    f32 sensitivity = 0.1f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
 
     _yaw += xoffset;
     _pitch += yoffset;
@@ -72,8 +78,6 @@ void Camera::process_cursor_movement(f32 x, f32 y)
     else if(_pitch < -89.0f)
         _pitch = -89.0f;
 
-    last_x = x;
-    last_y = y;
     this->update_vectors();
 }
 void Camera::process_scroll(f32 offset)
@@ -87,6 +91,7 @@ void Camera::process_scroll(f32 offset)
 
 void Camera::update_vectors()
 {
+    logger::log::debug("Yaw{%f} - Pitch{%f}", _yaw, _pitch);
     glm::vec3 new_front;
     new_front.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));
     new_front.y = sin(glm::radians(_pitch));
