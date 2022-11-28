@@ -24,9 +24,9 @@ void Application::init()
     {
         this->_camera.process_cursor_movement(x, y);
     });
-    _win.set_scroll_callback([](f64 offset)
+    _win.set_scroll_callback([this](f64 offset)
     {
-
+        this->_camera.process_scroll(offset);
     });
     _win.show();
     _win.focus();

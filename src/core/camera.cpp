@@ -91,7 +91,6 @@ void Camera::process_scroll(f32 offset)
 
 void Camera::update_vectors()
 {
-    logger::log::debug("Yaw{%f} - Pitch{%f}", _yaw, _pitch);
     glm::vec3 new_front;
     new_front.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));
     new_front.y = sin(glm::radians(_pitch));
