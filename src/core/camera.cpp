@@ -66,9 +66,8 @@ void Camera::process_cursor_movement(f32 x, f32 y)
     last_x = x;
     last_y = y;
 
-    f32 sensitivity = 0.1f;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
+    xoffset *= _sensitivity;
+    yoffset *= _sensitivity;
 
     _yaw += xoffset;
     _pitch += yoffset;
