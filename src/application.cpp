@@ -31,7 +31,7 @@ void Application::init()
     _win.show();
     _win.focus();
     _win.make_context();
-    _win.grab_cursor();
+    // _win.grab_cursor();
 }
 void Application::run()
 {
