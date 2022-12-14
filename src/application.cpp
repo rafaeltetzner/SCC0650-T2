@@ -2,8 +2,12 @@
 #include "util/logger.h"
 
 #include "GL/glew.h"
-#include "core/shader.h"
+#include "core/model.h"
 #include <glm/gtc/matrix_transform.hpp>
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 void Application::init()
 {
@@ -37,37 +41,46 @@ void Application::run()
 {
     Shader shader("res/vcode.vert", "res/fcode.frag");
     
+    // std::vector<Vertex> vertices = {
+    //     Vertex(glm::vec3(0.5f,  0.5f, 0.0f), glm::vec3(0), glm::vec3(0)),
+    //     Vertex(glm::vec3(0.5f, -0.5f, 0.0f), glm::vec3(0), glm::vec3(0)),
+    //     Vertex(glm::vec3(-0.5f, -0.5f, 0.0f), glm::vec3(0), glm::vec3(0)),
+    //     Vertex(glm::vec3(-0.5f,  0.5f, 0.0f), glm::vec3(0), glm::vec3(0)),
 
-    // Create object
-   float vertices[] = {
-        // positions          // texture coords
-         0.5f,  0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f,
-    };
-    unsigned int indices[] = {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
-    };
+    //     Vertex(glm::vec3(0.5f,  0.5f, 1.0f), glm::vec3(0), glm::vec3(0)),
+    //     Vertex(glm::vec3(0.5f, -0.5f, 1.0f), glm::vec3(0), glm::vec3(0)),
+    //     Vertex(glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(0), glm::vec3(0)),
+    //     Vertex(glm::vec3(-0.5f,  0.5f, 1.0f), glm::vec3(0), glm::vec3(0))
+    // };
+    // std::vector<Texture> textures = {
+    //     Texture(0, Texture::Type::DIFFUSE)
+    // };
+    // std::vector<u32> indices = {
+    //     0, 1, 3,
+    //     1, 2, 3,
 
-    unsigned int VBO, VAO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
+    //     0, 1, 4,
+    //     1, 5, 4,
 
-    glBindVertexArray(VAO);
+    //     0, 3, 4,
+    //     7, 4, 0,
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    //     3, 2, 6,
+    //     6, 7, 3,
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    //     1, 2, 6,
+    //     6, 5, 1,
 
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    
+    //     5, 6, 7,
+    //     7, 4, 5
+    // };
+
+    // Mesh mesh;
+    // mesh.init(vertices, textures, indices);
+
+    Model person;
+    person.load("res/FinalBaseMesh.obj");
+
     f32 last_frame_time = 0.0f;
     f32 current_frame_time = 0.0f;
 
@@ -82,20 +95,16 @@ void Application::run()
         // draw
         shader.use();
         
-        glm::mat4 model         = glm::mat4(1.0f);
-        glm::mat4 view          = glm::mat4(1.0f);
-        glm::mat4 projection    = glm::mat4(1.0f);
-
-        view = _camera.get_view();
-        
-        projection = glm::perspective(glm::radians(_camera.get_fov()), (float)1280 / (float)720, 0.1f, 100.0f);
+        glm::mat4 model         = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+        glm::mat4 projection    = glm::perspective(glm::radians(_camera.get_fov()), (float)1280 / (float)720, 0.1f, 100.0f);
+        glm::mat4 view          = _camera.get_view();
 
         shader["model"] = model;
         shader["view"] = view;
         shader["projection"] = projection;
-
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);    
+        person.draw(shader);
+        shader["model"] =  glm::rotate(glm::translate(model, glm::vec3(-15.0f, 0.0f, 0.0f)), glm::radians(90.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+        person.draw(shader);
 
         Window::poll_events();
         _win.swap_buffers();

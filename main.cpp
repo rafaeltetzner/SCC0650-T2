@@ -1,3 +1,4 @@
+// sudo apt install libassimp-dev
 #include "util/logger.h"
 #include "application.h"
 
