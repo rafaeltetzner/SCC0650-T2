@@ -25,13 +25,14 @@ struct Texture
 class Mesh
 {
     public:
+        unsigned int id_text;
         Mesh() : _vao(0), _vbo(0), _ebo(0) {};
-        Mesh(const std::vector<Vertex>& vertices, const std::vector<Texture>& textures, const std::vector<u32>& indices)
+        Mesh(const std::vector<Vertex>& vertices, const std::vector<Texture>& textures, const std::vector<u32>& indices, const std::string& filepathTexture)
         {
-            init(vertices, textures, indices);
+            init(vertices, textures, indices, filepathTexture);
         }
 
-        void init(const std::vector<Vertex>& vertices, const std::vector<Texture>& textures, const std::vector<u32>& indices);
+        void init(const std::vector<Vertex>& vertices, const std::vector<Texture>& textures, const std::vector<u32>& indices, const std::string& filepathTexture);
         void draw(const Shader& shader) const;
     private:
         u32 _vao, _vbo, _ebo;

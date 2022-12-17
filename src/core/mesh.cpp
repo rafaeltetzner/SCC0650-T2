@@ -1,7 +1,10 @@
 #include "mesh.h"
 #include <GL/glew.h>
 
-void Mesh::init(const std::vector<Vertex>& vertices, const std::vector<Texture>& textures, const std::vector<u32>& indices)
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+
+void Mesh::init(const std::vector<Vertex>& vertices, const std::vector<Texture>& textures, const std::vector<u32>& indices, const std::string& filepathTexture)
 {
     _vertices = vertices;
     _textures = textures;
@@ -27,6 +30,25 @@ void Mesh::init(const std::vector<Vertex>& vertices, const std::vector<Texture>&
 
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texture_coords));
+
+    SDL_Surface *minha_imagem;
+
+    minha_imagem = IMG_Load(filepathTexture.c_str());
+    if(minha_imagem == NULL){
+        throw("Unable to get a texture from the file");
+    }
+
+    glGenTextures(1, &(this->id_text));
+    glBindTexture(GL_TEXTURE_2D, this->id_text);
+
+    glBindTexture(GL_TEXTURE_2D, this->id_text); //Binda a textura na gpu
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); //Filtros de repeticao: GL_REPEAT -> repeticao simples
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //Filtros de maginificao e minificacao: GL_LINEAR
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,minha_imagem->w,minha_imagem->h,0,GL_RGB,GL_UNSIGNED_BYTE,minha_imagem->pixels);
+    glBindTexture(GL_TEXTURE_2D, 0);
     
     glBindVertexArray(0);
 }
@@ -34,6 +56,7 @@ void Mesh::init(const std::vector<Vertex>& vertices, const std::vector<Texture>&
 void Mesh::draw(const Shader& shader) const
 {
     glBindVertexArray(_vao);
+    glBindTexture(GL_TEXTURE_2D, this->id_text);
     glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }

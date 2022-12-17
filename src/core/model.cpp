@@ -59,11 +59,14 @@ Mesh Model::process_mesh(aiMesh* mesh, const aiScene* scene)
             indices.push_back(face.mIndices[j]);        
     }
 
-    return Mesh(vertices, textures, indices);
+    return Mesh(vertices, textures, indices, this->filepathTexture);
 }
 
-void Model::load(const std::string& filepath)
+void Model::load(const std::string& filepath, const std::string& filepathTexture)
 {
+    
+    this->filepathTexture = filepathTexture;
+
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(filepath, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
     

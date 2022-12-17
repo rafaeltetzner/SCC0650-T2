@@ -11,8 +11,9 @@
 class Model
 {
     public:
+        std::string filepathTexture;
         Model() {};
-        void load(const std::string& filepath);
+        void load(const std::string& filepath, const std::string& filepathTexture);
         void draw(const Shader& shader) const;
     private:
         std::vector<Mesh> _meshes;

@@ -50,6 +50,7 @@ class Shader
         };
 
         Uniform& operator[](const std::string& name);
+        u32 getId(){return this->_id;}
 
     private:
         u32 _id;

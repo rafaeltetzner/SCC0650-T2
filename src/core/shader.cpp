@@ -57,8 +57,8 @@ Shader::Shader(const std::string& vert_shader_filename, const std::string& frag_
     u32 fsh = glCreateShader(GL_FRAGMENT_SHADER);
 
     // Specify source
-    glShaderSource(vsh, 1, &vert_source, 0);
-    glShaderSource(fsh, 1, &frag_source, 0);
+    glShaderSource(vsh, 1, &vert_source, NULL);
+    glShaderSource(fsh, 1, &frag_source, NULL);
 
     char shader_log[1024] = {0};
     i32 is_compiled = 0;
@@ -104,6 +104,16 @@ Shader::Shader(const std::string& vert_shader_filename, const std::string& frag_
     logger::log::info("Created Shader composed by \"%s\" and \"%s\"",
         frag_shader_filename.c_str(), vert_shader_filename.c_str());
 
+    
+    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+    glEnable( GL_BLEND );
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_TEXTURE_2D);
+    
+    GLuint buffer[2];
+    glGenBuffers(2, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
 
     // Clear memory
     glDeleteShader(vsh);
