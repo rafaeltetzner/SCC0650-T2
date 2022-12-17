@@ -1,4 +1,5 @@
 #include "mesh.h"
+#include "util/logger.h"
 #include <GL/glew.h>
 
 void Mesh::init(const std::vector<Vertex>& vertices, const std::vector<Texture>& textures, const std::vector<u32>& indices)
@@ -31,9 +32,44 @@ void Mesh::init(const std::vector<Vertex>& vertices, const std::vector<Texture>&
     glBindVertexArray(0);
 }
 
-void Mesh::draw(const Shader& shader) const
+void Mesh::draw(Shader& shader) const
 {
+    u32 count_diffuse = 1;
+    u32 count_specular = 1;
+    u32 count_normal = 1;
+    u32 count_height = 1;
+
+    for(u32 i = 0; i < _textures.size(); i++)
+    {
+        glActiveTexture(GL_TEXTURE0 + i);
+        std::string num;
+        Texture::Type type = _textures[i].get_type();
+        std::string uniform_name;
+
+        switch(type)
+        {
+            case Texture::Type::DIFFUSE:
+                uniform_name = "texture_diffuse" + std::to_string(count_diffuse++);
+                break;
+            case Texture::Type::SPECULAR:
+                uniform_name = "texture_specular" + std::to_string(count_specular++);
+                break;
+            case Texture::Type::NORMAL:
+                uniform_name = "texture_normal" + std::to_string(count_normal++);
+                break;
+            case Texture::Type::HEIGHT:
+                uniform_name = "texture_height" + std::to_string(count_height++);
+                break;
+            default:
+                break;
+        }
+        shader[uniform_name].set_i32(i);
+        glBindTexture(GL_TEXTURE_2D, _textures[i].get_id());
+    }
+
     glBindVertexArray(_vao);
     glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+
+    glActiveTexture(GL_TEXTURE0);
 }

@@ -29,7 +29,7 @@ class Camera
                const glm::vec3& up, 
                f32 yaw=-90.0f, 
                f32 pitch=0.0f, 
-               f32 sensitivity=0.1f, 
+               f32 sensitivity=0.5f, 
                f32 speed=10.0f,
                f32 zoom=45.0f);
         

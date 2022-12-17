@@ -18,6 +18,9 @@ Window::~Window()
 bool Window::init(const char* name, u32 width, u32 height)
 {
     u32 res = glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     if(!res)
     {
         logger::log::fatal("Failed to Initialize GLFW at window \"%s\" creation", name);

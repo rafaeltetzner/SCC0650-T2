@@ -39,6 +39,13 @@ class Shader
             public:
                 Uniform() : _location(0) {};
                 Uniform(u32 loc) : _location(loc) {};
+                void set_f32(f32 value) const;
+                void set_i32(i32 value) const;
+                void set_vec2(const glm::vec2& value) const;
+                void set_vec3(const glm::vec3& value) const;
+                void set_vec4(const glm::vec4& value) const;
+                void set_mat4(const glm::mat4& value) const;
+
                 void operator=(f32 value) const;
                 void operator=(i32 value) const;
                 void operator=(const glm::vec2& value) const;

@@ -129,6 +129,31 @@ Shader::Uniform& Shader::operator[](const std::string& name)
 }
 
 
+void Shader::Uniform::set_f32(f32 value) const
+{
+    glUniform1f(_location, value);
+}
+void Shader::Uniform::set_i32(i32 value) const
+{
+    glUniform1i(_location, value);
+}
+void Shader::Uniform::set_vec2(const glm::vec2& value) const
+{
+    glUniform2f(_location, value.x, value.y);
+}
+void Shader::Uniform::set_vec3(const glm::vec3& value) const
+{
+    glUniform3f(_location, value.x, value.y, value.z);
+}
+void Shader::Uniform::set_vec4(const glm::vec4& value) const
+{
+    glUniform4f(_location, value.x, value.y, value.z, value.w);
+}
+void Shader::Uniform::set_mat4(const glm::mat4& value) const
+{
+    glUniformMatrix4fv(_location, 1, GL_FALSE, &value[0][0]);
+}
+
 void Shader::Uniform::operator=(f32 value) const
 {
     glUniform1f(_location, value);

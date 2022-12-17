@@ -2,6 +2,9 @@
 
 #include <stdint.h>
 
+/** @brief unsigned char integer */
+typedef unsigned char uchar;
+
 /** @brief 8-bit unsigned integer */
 typedef uint8_t u8;
 /** @brief 16-bit unsigned integer */

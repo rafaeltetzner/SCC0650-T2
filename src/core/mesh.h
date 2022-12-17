@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shader.h"
+#include "texture.h"
 #include <glm/vec3.hpp>
 #include <vector>
 
@@ -13,14 +14,14 @@ struct Vertex
     glm::vec2 texture_coords;
 };
 
-struct Texture
-{
-    enum Type {DIFFUSE = 0, SPECULAR = 1};
-    Texture(){};
-    Texture(u32 id, Type type) : id(id), type(type) {};
-    u32 id;
-    Type type;
-};
+// struct Texture
+// {
+//     enum Type {DIFFUSE = 0, SPECULAR = 1, NORMAL = 2, HEIGHT = 3};
+//     Texture(){};
+//     Texture(u32 id, Type type) : id(id), type(type) {};
+//     u32 id;
+//     Type type;
+// };
 
 class Mesh
 {
@@ -32,7 +33,7 @@ class Mesh
         }
 
         void init(const std::vector<Vertex>& vertices, const std::vector<Texture>& textures, const std::vector<u32>& indices);
-        void draw(const Shader& shader) const;
+        void draw(Shader& shader) const;
     private:
         u32 _vao, _vbo, _ebo;
         std::vector<Vertex> _vertices;

@@ -3,16 +3,22 @@
 #include "util/types.h"
 #include <string>
 
+
 class Texture
 {
     public:
-        enum type {NONE, DIFFUSE, SPECULAR};
-        Texture() : _id(0), _width(0), _height(0), _type(type::NONE) {}
-        Texture(std::string& filepath, type t);
+        enum Type {DIFFUSE = 0, SPECULAR = 1, NORMAL = 2, HEIGHT = 3};
+        Texture(){};
+        Texture(Type type, const std::string& path) : _id(0), _type(type), _path(path) { this->load(); };
+        bool load();
 
+        u32 get_id() const { return _id; };
+        Type get_type() const { return _type; };
     private:
         u32 _id;
-        u32 _width;
-        u32 _height;
-        type _type;
+        i32 _width;
+        i32 _height;
+        i32 _n_channels;
+        Type _type;
+        std::string _path;
 };
