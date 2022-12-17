@@ -109,11 +109,14 @@ void Application::run()
 
     /////////////////////////////////
 
-    Model person;
-    person.load("res/FinalBaseMesh.obj", "textures/tree.jpg");
+    //Model person;
+    //person.load("res/FinalBaseMesh.obj", "textures/tree.jpg");
 
-    Model person2;
-    person2.load("res/FinalBaseMesh.obj", "textures/chairTexture.jpg");
+    //Model person2;
+    //person2.load("res/FinalBaseMesh.obj", "textures/chairTexture.jpg");
+
+    Model cube;
+    cube.load("res/textured-cube.obj", "res/albedo.png");
 
 
     //Diz ao openGL para usar texturas com transparencia
@@ -150,9 +153,11 @@ void Application::run()
         shader["view"] = view;
         shader["projection"] = projection;
 
-        person.draw(shader);
+        cube.draw(shader);
+
+        //person.draw(shader);
         shader["model"] =  glm::rotate(glm::translate(model, glm::vec3(-15.0f, 0.0f, 0.0f)), glm::radians(90.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-        person2.draw(shader);
+        //person2.draw(shader);
 
         Window::poll_events();
         _win.swap_buffers();
