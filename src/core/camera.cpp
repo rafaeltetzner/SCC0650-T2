@@ -1,12 +1,14 @@
 #include "camera.h"
+#include "util/logger.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Camera::Camera(const glm::vec3& position, const glm::vec3& up, u32 width, u32 height, f32 yaw, f32 pitch, f32 sensitivity, f32 speed, f32 zoom)
+Camera::Camera(const glm::vec3& position, const glm::vec3& up, u32 width, u32 height, mode mode, f32 yaw, f32 pitch, f32 sensitivity, f32 speed, f32 zoom)
 {
     _width = width;
     _height = height;
     _position = position;
+    _mode = mode;
     _front = glm::vec3(0.0f, 0.0f, -1.0f);  
     _world_up = up;
     _yaw = yaw;
@@ -27,7 +29,7 @@ f32 Camera::get_fov() const
     return _zoom;
 }
 
-void Camera::process_key_input(event::key::code key, f32 dt)
+void Camera::process_key_movement(event::key::code key, f32 dt)
 {
     using namespace event::key;
     f32 velocity = _speed * dt;
@@ -55,8 +57,6 @@ void Camera::process_key_input(event::key::code key, f32 dt)
             break;
     }
 }
-
-#include "util/logger.h"
 
 void Camera::process_cursor_movement(f32 x, f32 y)
 {
@@ -104,5 +104,13 @@ void Camera::update_vectors()
 
 glm::mat4 Camera::get_projection()
 {
-    return glm::perspective(glm::radians(_zoom), (f32)_width / (f32) _height, 0.1f, 100.0f);
+    switch(_mode)
+    {
+        case mode::PERSPECTIVE:
+            return glm::perspective(glm::radians(_zoom), (f32)_width / (f32) _height, 0.1f, 1000.0f);
+        case mode::ORTHO:
+            return glm::ortho(-(_width / 2.0f)/ _zoom, +(_width / 2.0f) / _zoom, -(_height / 2.0f) / _zoom, +(_height / 2.0f) / _zoom, -1000.0f, 1000.0f);
+        default:
+            return glm::perspective(glm::radians(_zoom), (f32)_width / (f32) _height, 0.1f, 1000.0f);
+    }
 }

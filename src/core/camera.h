@@ -12,6 +12,7 @@
 class Camera
 {
     public:
+        enum mode {PERSPECTIVE, ORTHO};
         Camera(){};
 
         /**
@@ -27,8 +28,9 @@ class Camera
          */
         Camera(const glm::vec3& position,
                const glm::vec3& up, 
-               u32 _width,
-               u32 _height,
+               u32 width,
+               u32 height,
+               mode mode = mode::PERSPECTIVE,
                f32 yaw=-90.0f, 
                f32 pitch=0.0f, 
                f32 sensitivity=0.5f, 
@@ -55,7 +57,7 @@ class Camera
          * @param key The pressed key
          * @param dt The game loop deltatime
          */
-        void process_key_input(event::key::code key, f32 dt);
+        void process_key_movement(event::key::code key, f32 dt);
 
         /**
          * @brief Process cursor movement, internally calculates the offset for each function call
@@ -74,6 +76,8 @@ class Camera
 
         glm::mat4 get_projection();
 
+        void set_mode(mode mode){ _mode = mode; };
+
     private:
         glm::vec3 _position;
         glm::vec3 _up;
@@ -90,6 +94,8 @@ class Camera
 
         u32 _width;
         u32 _height;
+
+        mode _mode;
 
         void update_vectors();
 };

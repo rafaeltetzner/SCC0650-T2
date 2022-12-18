@@ -53,7 +53,7 @@ class Camera
          * @param key The pressed key
          * @param dt The game loop deltatime
          */
-        void process_key_input(event::key::code key, f32 dt);
+        void process_key_movement(event::key::code key, f32 dt);
 
         /**
          * @brief Process cursor movement, internally calculates the offset for each function call

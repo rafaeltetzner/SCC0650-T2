@@ -17,7 +17,7 @@ void Application::init()
 
     _win.set_key_callback([this](event::key::code code, event::key::action action)
     {
-        this->_camera.process_key_input(code, this->_delta_time);
+        this->_camera.process_key_movement(code, this->_delta_time);
     });
 
     _win.set_mouse_callback([](event::mouse::button button, event::mouse::action action)

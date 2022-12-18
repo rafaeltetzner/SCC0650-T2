@@ -25,7 +25,7 @@ f32 Camera::get_fov() const
     return _zoom;
 }
 
-void Camera::process_key_input(event::key::code key, f32 dt)
+void Camera::process_key_movement(event::key::code key, f32 dt)
 {
     using namespace event::key;
     f32 velocity = _speed * dt;

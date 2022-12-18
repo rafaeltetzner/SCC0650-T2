@@ -11,7 +11,18 @@ void Application::init()
 
     _win.set_key_callback([this](event::key::code code, event::key::action action)
     {
-        this->_camera.process_key_input(code, this->_delta_time);
+        switch(code)
+        {
+        case event::key::code::KEY_P:
+            this->_camera.set_mode(Camera::mode::PERSPECTIVE);
+            break;
+        case event::key::code::KEY_O:
+            this->_camera.set_mode(Camera::mode::ORTHO);
+            break;
+        default:
+            this->_camera.process_key_movement(code, this->_delta_time);
+            break;
+        }
     });
 
     _win.set_mouse_callback([](event::mouse::button button, event::mouse::action action)
