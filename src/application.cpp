@@ -50,12 +50,12 @@ void Application::run()
 
     std::vector<std::string> faces = 
     {
-        "res/skybox/right.jpg",
-        "res/skybox/left.jpg",
-        "res/skybox/top.jpg",
-        "res/skybox/bottom.jpg",
-        "res/skybox/front.jpg",
-        "res/skybox/back.jpg",
+        "res/skybox2/right.png",
+        "res/skybox2/left.png",
+        "res/skybox2/top.png",
+        "res/skybox2/bottom.png",
+        "res/skybox2/front.png",
+        "res/skybox2/back.png"
     };
     Skybox skybox(faces);
 
