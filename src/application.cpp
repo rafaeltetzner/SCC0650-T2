@@ -2,6 +2,7 @@
 #include "util/logger.h"
 
 #include "core/renderer.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 void Application::init()
 {
@@ -41,17 +42,28 @@ void Application::init()
     _win.focus();
     _win.make_context();
 }
+
 void Application::run()
 {
     Shader shader("res/shaders/vcode.vert", "res/shaders/fcode.frag");
 
     Model fox_model("res/fox/low-poly-fox-by-pixelmannen.obj");
     Model cube_model("res/cube/textured-cube.obj");
+    Model shrek("res/shrek/shrek.obj");
+
+    Light light;
+    light.position = glm::vec3(0.0f);
+    light.ambient = glm::vec3(0.5f);
+    light.color = glm::vec3(1.0f);
+    light.diffuse = glm::vec3(1.0f);
+    light.specular = glm::vec3(1.0f);
 
     std::vector<renderer::Instance> instances;
+    instances.push_back(shrek);
     instances.push_back(fox_model);
     instances.push_back(cube_model);
 
+    instances[0].transform = glm::scale(glm::mat4(1.0f), glm::vec3(400.0f));
 
     f32 last_frame_time = 0.0f;
     f32 current_frame_time = 0.0f;
@@ -64,8 +76,11 @@ void Application::run()
 
         _win.clear();
         
-        renderer::render(instances, shader, _camera);
+        shader.use();
         
+        
+        renderer::render(instances, shader, _camera, light);
+
         Window::poll_events();
         _win.swap_buffers();
     }

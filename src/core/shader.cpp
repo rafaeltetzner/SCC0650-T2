@@ -89,7 +89,6 @@ Shader::Shader(const std::string& vert_shader_filename, const std::string& frag_
     glAttachShader(_id, vsh);
     glAttachShader(_id, fsh);
 
-
     // Link shaders
     i32 is_linked = 0;
     glLinkProgram(_id);

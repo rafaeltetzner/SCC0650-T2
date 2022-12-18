@@ -76,6 +76,8 @@ class Camera
 
         glm::mat4 get_projection();
 
+        glm::vec3 get_pos() { return _position; };
+
         void set_mode(mode mode){ _mode = mode; };
 
     private:

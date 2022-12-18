@@ -31,30 +31,17 @@ void Mesh::init(const std::vector<Vertex>& vertices, const Material& material)
 
 void Mesh::draw(Shader& shader)
 {
-    u32 count_diffuse = 1;
-    u32 count_specular = 1;
+    shader["material_ambient"] = _material.ambient;
+    shader["material_diffuse"] = _material.diffuse;
+    shader["material_specular"] = _material.specular;
 
-    for(u32 i = 0; i < _material.textures.size(); i++)
-    {
-        glActiveTexture(GL_TEXTURE0 + i);
-        std::string num;
-        Texture::Type type = _material.textures[i].get_type();
-        std::string uniform_name;
+    glActiveTexture(GL_TEXTURE0 + 0);
+    shader["material_tex_diffuse"].set_i32(0);
+    glBindTexture(GL_TEXTURE_2D, _material.tex_diffuse.get_id());
 
-        switch(type)
-        {
-            case Texture::Type::DIFFUSE:
-                uniform_name = "texture_diffuse" + std::to_string(count_diffuse++);
-                break;
-            case Texture::Type::SPECULAR:
-                uniform_name = "texture_specular" + std::to_string(count_specular++);
-                break;
-            default:
-                break;
-        }
-        shader[uniform_name].set_i32(i);
-        glBindTexture(GL_TEXTURE_2D, _material.textures[i].get_id());
-    }
+    glActiveTexture(GL_TEXTURE0 + 1);
+    shader["material_tex_specular"].set_i32(1);
+    glBindTexture(GL_TEXTURE_2D, _material.tex_specular.get_id());
 
     glBindVertexArray(_vao);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());

@@ -31,7 +31,8 @@ class Mesh
             glm::vec3 ambient;
             glm::vec3 diffuse;
             glm::vec3 specular;
-            std::vector<Texture> textures;
+            Texture tex_diffuse;
+            Texture tex_specular;
         };
         Mesh() : _vao(0), _vbo(0) {};
         Mesh(const std::vector<Vertex>& vertices, const Material& material)

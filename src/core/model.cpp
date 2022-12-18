@@ -214,9 +214,9 @@ Model::Model(const std::string& obj)
         material.specular = material_data.ks;
         std::string dir = obj.substr(0, obj.find_last_of('/'));
         if(material_data.map_kd != "")
-            material.textures.push_back(Texture(dir + "/" + material_data.map_kd, Texture::Type::DIFFUSE));
+            material.tex_diffuse = Texture(dir + "/" + material_data.map_kd, Texture::Type::DIFFUSE);
         if(material_data.map_ks != "")
-            material.textures.push_back(Texture(dir + "/" + material_data.map_ks, Texture::Type::SPECULAR));
+            material.tex_specular = Texture(dir + "/" + material_data.map_ks, Texture::Type::SPECULAR);
 
         _meshes.push_back(Mesh(vertices, material));
     }
