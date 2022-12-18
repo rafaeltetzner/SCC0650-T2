@@ -1,7 +1,7 @@
 #include "application.h"
-#include "util/logger.h"
-
 #include "core/renderer.h"
+#include "core/skybox.h"
+
 #include <glm/gtc/matrix_transform.hpp>
 
 void Application::init()
@@ -45,18 +45,33 @@ void Application::init()
 
 void Application::run()
 {
-    Shader shader("res/shaders/vcode.vert", "res/shaders/fcode.frag");
+    Shader default_shader("res/shaders/vcode.vs", "res/shaders/fcode.fs");
+    Shader skybox_shader("res/shaders/skybox.vs", "res/shaders/skybox.fs");
+
+    std::vector<std::string> faces = 
+    {
+        "res/skybox/right.jpg",
+        "res/skybox/left.jpg",
+        "res/skybox/top.jpg",
+        "res/skybox/bottom.jpg",
+        "res/skybox/front.jpg",
+        "res/skybox/back.jpg",
+    };
+    Skybox skybox(faces);
 
     Model fox_model("res/fox/low-poly-fox-by-pixelmannen.obj");
     Model cube_model("res/cube/textured-cube.obj");
     Model shrek("res/shrek/shrek.obj");
 
     Light light;
-    light.position = glm::vec3(0.0f);
-    light.ambient = glm::vec3(0.5f);
+    light.position = glm::vec3(10.0f);
+    light.ambient = glm::vec3(0.2f);
     light.color = glm::vec3(1.0f);
     light.diffuse = glm::vec3(1.0f);
     light.specular = glm::vec3(1.0f);
+    light.constant = 1.0f;
+    light.linear = 0.001f;
+    light.quadratic = 0.0f;
 
     std::vector<renderer::Instance> instances;
     instances.push_back(shrek);
@@ -76,10 +91,10 @@ void Application::run()
 
         _win.clear();
         
-        shader.use();
+        default_shader.use();
         
-        
-        renderer::render(instances, shader, _camera, light);
+        skybox.draw(skybox_shader, _camera);
+        renderer::render(instances, default_shader, _camera, light);
 
         Window::poll_events();
         _win.swap_buffers();

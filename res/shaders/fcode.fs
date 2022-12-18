@@ -13,6 +13,9 @@ uniform vec3 light_color;
 uniform vec3 light_ambient;
 uniform vec3 light_diffuse;
 uniform vec3 light_specular;
+uniform float light_constant;
+uniform float light_linear;
+uniform float light_quadratic;
 
 uniform vec3 camera_pos;
 
@@ -27,17 +30,16 @@ void main()
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 30);
     
-    // float distance = length(light.position - fragPos);
-    // float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
+    float distance = length(light_position - vs_position);
+    float attenuation = 1.0 / (light_constant + light_linear * distance + light_quadratic * (distance * distance));    
     
     vec3 ambient = light_ambient * vec3(texture(material_tex_diffuse, vs_texcoord));
     vec3 diffuse = light_diffuse * diff * vec3(texture(material_tex_diffuse, vs_texcoord));
     vec3 specular = light_specular * spec * vec3(texture(material_tex_specular, vs_texcoord));
 
-    //ambient *= attenuation;
-    //diffuse *= attenuation;
-    //specular *= attenuation;
+    ambient *= attenuation;
+    diffuse *= attenuation;
+    specular *= attenuation;
     
     fs_color = vec4(ambient + specular + diffuse, 1.0f);
-    //fs_color = texture(material_tex_diffuse, vs_texcoord);
 }

@@ -10,4 +10,7 @@ struct Light
     glm::vec3 ambient;
     glm::vec3 diffuse;
     glm::vec3 specular;
+    f32 constant;
+    f32 linear;
+    f32 quadratic;
 };

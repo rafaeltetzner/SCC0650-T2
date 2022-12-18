@@ -18,11 +18,16 @@ namespace renderer
         shader["projection"] = cam.get_projection();
         shader["camera_pos"] = cam.get_pos();
 
+
         shader["light_position"] = light.position;
         shader["light_ambient"] = light.ambient;
         shader["light_diffuse"] = light.diffuse;
         shader["light_specular"] = light.specular;
         shader["light_color"] = light.color;
+        shader["light_constant"].set_f32(light.constant);
+        shader["light_linear"].set_f32(light.linear);
+        shader["light_quadratic"].set_f32(light.quadratic);
+
         for(auto& i : instances)
         {
             shader["model"] = i.transform;

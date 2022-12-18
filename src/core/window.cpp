@@ -68,7 +68,7 @@ bool Window::make_context() const
 void Window::clear() const
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
 }
 
 void Window::swap_buffers() const
