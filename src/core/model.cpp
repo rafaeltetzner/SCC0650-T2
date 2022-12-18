@@ -204,6 +204,7 @@ Model::Model(const std::string& obj)
             vertices[i].position = data->v_positions[mesh_data.f_position_idx[i] - 1];
             vertices[i].normal = data->vn_normals[mesh_data.f_normal_idx[i] - 1];
             vertices[i].texture_coords = data->vt_texcoords[mesh_data.f_texcoord_idx[i] - 1];
+            vertices[i].texture_coords.y *= -1;
         }
 
         OBJMaterialData material_data = data->materials[mesh_data.material_name];
