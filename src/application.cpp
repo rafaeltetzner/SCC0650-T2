@@ -61,7 +61,7 @@ void Application::run()
 
     Model fox_model("res/fox/low-poly-fox-by-pixelmannen.obj");
     Model cube_model("res/cube/textured-cube.obj");
-    Model shrek("res/shrek/shrek.obj");
+    Model shrek_model("res/shrek/shrek.obj");
 
     Light light;
     light.position = glm::vec3(10.0f);
@@ -70,11 +70,11 @@ void Application::run()
     light.diffuse = glm::vec3(1.0f);
     light.specular = glm::vec3(1.0f);
     light.constant = 1.0f;
-    light.linear = 0.001f;
+    light.linear = 0.0f;
     light.quadratic = 0.0f;
 
     std::vector<renderer::Instance> instances;
-    instances.push_back(shrek);
+    instances.push_back(shrek_model);
     instances.push_back(fox_model);
     instances.push_back(cube_model);
 
@@ -90,8 +90,6 @@ void Application::run()
         last_frame_time = current_frame_time;
 
         _win.clear();
-        
-        default_shader.use();
         
         skybox.draw(skybox_shader, _camera);
         renderer::render(instances, default_shader, _camera, light);

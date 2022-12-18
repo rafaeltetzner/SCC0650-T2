@@ -81,6 +81,7 @@ Skybox::Skybox(const std::vector<std::string>& faces)
 
 void Skybox::draw(Shader& shader, Camera& camera)
 {
+    shader.use();
     glDepthFunc(GL_LEQUAL);
     shader.use();
     shader["skybox"].set_i32(0);
