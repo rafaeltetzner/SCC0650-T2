@@ -14,4 +14,6 @@ class Application
         Window _win;
         Camera _camera;
         f32 _delta_time;
+        f32 _width;
+        f32 _height;
 };

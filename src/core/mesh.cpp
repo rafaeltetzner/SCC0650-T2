@@ -27,15 +27,6 @@ void Mesh::init(const std::vector<Vertex>& vertices, const Material& material)
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texture_coords));
     
     glBindVertexArray(0);
-
-    FILE* f = fopen("novo.txt", "w");
-    for(auto v : _vertices)
-    {
-        fprintf(f, "p - (%f, %f, %f)\n", v.position.x, v.position.y, v.position.z);
-        fprintf(f, "n - (%f, %f, %f)\n", v.normal.x, v.normal.y, v.normal.z);
-        fprintf(f, "t - (%f, %f)\n\n", v.texture_coords.x, v.texture_coords.y);
-    }
-    fclose(f);
 }
 
 void Mesh::draw(Shader& shader)

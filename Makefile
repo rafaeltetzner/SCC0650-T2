@@ -2,7 +2,7 @@ CC		:= g++
 OUT		:= prog
 FLAGS	:= -Wall -g -std=c++17
 INC		:= -Isrc -Isrc
-LIBS	:= -lglfw -lGL -lGLEW -lm -lassimp
+LIBS	:= -lglfw -lGL -lGLEW -lm
 SRCDIR	:= src
 OBJDIR	:= obj
 MAIN	:= main.cpp

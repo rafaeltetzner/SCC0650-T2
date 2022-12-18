@@ -12,7 +12,7 @@
 class Window
 {
     public:
-    Window() : _handle(0), _title("") {};
+    Window() : _handle(0), _title(""), _width(0), _height(0) {};
     ~Window();
     
     /**
@@ -126,9 +126,14 @@ class Window
      */
     void set_scroll_callback(event::scroll::callback_fn fn);
 
+    u32 get_width(){ return _width; }
+    u32 get_height(){ return _height; }
+
     private:
     GLFWwindow* _handle;
     std::string _title;
+    u32 _width;
+    u32 _height;
     struct UserCallback {
         event::key::callback_fn key_callback;
         event::mouse::callback_fn mouse_callback;

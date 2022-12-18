@@ -27,6 +27,8 @@ class Camera
          */
         Camera(const glm::vec3& position,
                const glm::vec3& up, 
+               u32 _width,
+               u32 _height,
                f32 yaw=-90.0f, 
                f32 pitch=0.0f, 
                f32 sensitivity=0.5f, 
@@ -70,6 +72,8 @@ class Camera
          */
         void process_scroll(f32 offset);
 
+        glm::mat4 get_projection();
+
     private:
         glm::vec3 _position;
         glm::vec3 _up;
@@ -83,6 +87,9 @@ class Camera
         f32 _speed;
         f32 _sensitivity;
         f32 _zoom;
+
+        u32 _width;
+        u32 _height;
 
         void update_vectors();
 };

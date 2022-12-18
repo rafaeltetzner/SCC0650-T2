@@ -17,6 +17,8 @@ Window::~Window()
 
 bool Window::init(const char* name, u32 width, u32 height)
 {
+    _width = width;
+    _height = height;
     u32 res = glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

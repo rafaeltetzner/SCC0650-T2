@@ -2,8 +2,10 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-Camera::Camera(const glm::vec3& position, const glm::vec3& up, f32 yaw, f32 pitch, f32 sensitivity, f32 speed, f32 zoom)
+Camera::Camera(const glm::vec3& position, const glm::vec3& up, u32 width, u32 height, f32 yaw, f32 pitch, f32 sensitivity, f32 speed, f32 zoom)
 {
+    _width = width;
+    _height = height;
     _position = position;
     _front = glm::vec3(0.0f, 0.0f, -1.0f);  
     _world_up = up;
@@ -98,4 +100,9 @@ void Camera::update_vectors()
 
     _right = glm::normalize(glm::cross(_front, _world_up));
     _up = glm::normalize(glm::cross(_right, _front));
+}
+
+glm::mat4 Camera::get_projection()
+{
+    return glm::perspective(glm::radians(_zoom), (f32)_width / (f32) _height, 0.1f, 100.0f);
 }

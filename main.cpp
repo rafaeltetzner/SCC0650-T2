@@ -1,4 +1,3 @@
-// sudo apt install libassimp-dev
 // git clone https://github.com/nothings/stb.git
 // sudo cp stb/stb_image.h /usr/local/include/
 #include "util/logger.h"
