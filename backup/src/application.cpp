@@ -35,15 +35,22 @@ void Application::init()
     _win.show();
     _win.focus();
     _win.make_context();
+    // _win.grab_cursor();
 }
 void Application::run()
 {
     Shader shader("res/shaders/vcode.vert", "res/shaders/fcode.frag");
-    Model fox("res/fox/low-poly-fox-by-pixelmannen.obj");
-    Model cube("res/cube/textured-cube.obj");
+
+    Model fox;
+    fox.load("res/fox/low-poly-fox-by-pixelmannen.obj");
+
+    Model box;
+    box.load("res/cube/textured-cube.obj");
 
     f32 last_frame_time = 0.0f;
     f32 current_frame_time = 0.0f;
+
+    glEnable(GL_DEPTH_TEST);
 
     while(!_win.should_close())
     {
@@ -51,26 +58,29 @@ void Application::run()
         _delta_time = current_frame_time - last_frame_time;
         last_frame_time = current_frame_time;
 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         _win.clear();
 
         // draw
         shader.use();
         
-        glm::mat4 model         = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+        glm::mat4 model         = glm::scale(glm::mat4(1.0f), glm::vec3(0.01f));
         glm::mat4 projection    = glm::perspective(glm::radians(_camera.get_fov()), (float)1280 / (float)720, 0.1f, 100.0f);
         glm::mat4 view          = _camera.get_view();
 
         shader["model"] = model;
         shader["view"] = view;
         shader["projection"] = projection;
-        cube.draw(shader);
         fox.draw(shader);
+
+        model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 0.0f));
+        shader["model"] = model;
+        box.draw(shader);
 
         Window::poll_events();
         _win.swap_buffers();
     }
 }
-
 void Application::end()
 {
 }

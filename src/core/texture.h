@@ -4,16 +4,40 @@
 #include <string>
 
 
+/**
+ * @brief A simple opengl Texture object wrapper
+ * 
+ */
 class Texture
 {
     public:
-        enum Type {DIFFUSE = 0, SPECULAR = 1, NORMAL = 2, HEIGHT = 3};
+        /** @brief Type of the texture **/
+        enum Type {DIFFUSE = 0, SPECULAR = 1};
         Texture(){};
-        Texture(Type type, const std::string& path) : _id(0), _type(type), _path(path) { this->load(); };
-        bool load();
+        /**
+         * @brief Construct a new Texture object
+         * 
+         * @param path Path to the texture image file
+         * @param type The type of the texture
+         */
+        Texture(const std::string& path, Type type);
 
-        u32 get_id() const { return _id; };
-        Type get_type() const { return _type; };
+        /**
+         * @brief Binds texture to given unit
+         * 
+         * @param unit 
+         */
+        void bind(u32 unit);
+
+        /**
+         * @brief Unbinds ALL textures
+         * 
+         */
+        void unbind();
+
+        Type get_type(){ return _type; };
+        u32 get_id(){ return _id; };
+        
     private:
         u32 _id;
         i32 _width;

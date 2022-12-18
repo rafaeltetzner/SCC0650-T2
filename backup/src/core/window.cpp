@@ -56,7 +56,6 @@ bool Window::make_context() const
         logger::log::fatal("Failed to initialize GLEW at context of window \"%s\"", _title.c_str());
         return false;
     }
-    glEnable(GL_DEPTH_TEST);
     logger::log::trace("Made window \"%s\" current context", _title.c_str());
     return true;
 }
@@ -65,7 +64,7 @@ bool Window::make_context() const
 
 void Window::clear() const
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 

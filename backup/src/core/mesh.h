@@ -26,23 +26,17 @@ struct Vertex
 class Mesh
 {
     public:
-        struct Material
+        Mesh() : _vao(0), _vbo(0), _ebo(0) {};
+        Mesh(const std::vector<Vertex>& vertices, const std::vector<Texture>& textures, const std::vector<u32>& indices)
         {
-            glm::vec3 ambient;
-            glm::vec3 diffuse;
-            glm::vec3 specular;
-            std::vector<Texture> textures;
-        };
-        Mesh() : _vao(0), _vbo(0) {};
-        Mesh(const std::vector<Vertex>& vertices, const Material& material)
-        {
-            init(vertices, material);
+            init(vertices, textures, indices);
         }
 
-        void init(const std::vector<Vertex>& vertices, const Material& material);
-        void draw(Shader& shader);
+        void init(const std::vector<Vertex>& vertices, const std::vector<Texture>& textures, const std::vector<u32>& indices);
+        void draw(Shader& shader) const;
     private:
-        u32 _vao, _vbo;
+        u32 _vao, _vbo, _ebo;
         std::vector<Vertex> _vertices;
-        Material _material;
+        std::vector<Texture> _textures;
+        std::vector<u32> _indices;
 };
