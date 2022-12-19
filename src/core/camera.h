@@ -42,7 +42,7 @@ class Camera
          * 
          * @return glm::mat4 The view matrix
          */
-        glm::mat4 get_view() const;
+        glm::mat4 get_view();
 
         /**
          * @brief Get the fov of the camera
