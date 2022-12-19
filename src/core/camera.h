@@ -34,7 +34,7 @@ class Camera
                f32 yaw=-90.0f, 
                f32 pitch=0.0f, 
                f32 sensitivity=0.5f, 
-               f32 speed=500.0f,
+               f32 speed=50.0f,
                f32 zoom=45.0f);
         
         /**

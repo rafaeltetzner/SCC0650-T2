@@ -60,12 +60,11 @@ void Application::run()
     Skybox skybox(faces);
 
     Model fox_model("res/fox/low-poly-fox-by-pixelmannen.obj");
-    Model cube_model("res/cube/plano.obj");
+    Model cube_model("res/plano/plano.obj");
     Model shrek_model("res/shrek/shrek.obj");
     Model campFire("res/CampFire/Fire.obj");
     Model cabana_model("res/cabana/cabana.obj");
     Model mesaRedonda("res/MesaRedonda/mesaRedonda.obj");
-    Model mesaRedonda2("res/MesaRedonda/mesaRedonda.obj");
     Model pote("res/pote/poteCerto.obj");
 
     Light light;
@@ -85,7 +84,7 @@ void Application::run()
     instances.push_back(campFire);
     instances.push_back(cabana_model);
     instances.push_back(mesaRedonda);
-    instances.push_back(mesaRedonda2);
+    instances.push_back(mesaRedonda);
     instances.push_back(pote);
 
     f32 meters = 1.0f;
