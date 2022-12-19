@@ -62,6 +62,11 @@ void Application::run()
     Model fox_model("res/fox/low-poly-fox-by-pixelmannen.obj");
     Model cube_model("res/cube/textured-cube.obj");
     Model shrek_model("res/shrek/shrek.obj");
+    Model campFire("res/CampFire/Fire.obj");
+    Model cabana_model("res/cabana/cabana.obj");
+    Model mesaRedonda("res/MesaRedonda/mesaRedonda.obj");
+    Model mesaRedonda2("res/MesaRedonda/mesaRedonda.obj");
+    Model pote("res/pote/poteCerto.obj");
 
     Light light;
     light.position = glm::vec3(10.0f);
@@ -74,12 +79,99 @@ void Application::run()
     light.quadratic = 0.0f;
 
     std::vector<renderer::Instance> instances;
-    instances.push_back(shrek_model);
     instances.push_back(fox_model);
     instances.push_back(cube_model);
+    instances.push_back(shrek_model);
+    instances.push_back(campFire);
+    instances.push_back(cabana_model);
+    instances.push_back(mesaRedonda);
+    instances.push_back(mesaRedonda2);
+    instances.push_back(pote);
 
-    instances[0].transform = glm::scale(glm::mat4(1.0f), glm::vec3(400.0f));
+    f32 meters = 1.0f;
 
+    // auto foxRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // auto foxScale = glm::scale(glm::mat4(1.0f), glm::vec3(0.156f, 0.156f, 0.156f));
+    // auto foxTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(0.32917f, -2.0894f, -97.249f));
+    // instances[0].transform = foxTranslate * foxScale * foxRotate;
+
+    // auto cubeRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // auto cubeScale = glm::scale(glm::mat4(1.0f), glm::vec3(200.0f, 240.0f, 1.0f));
+    // auto cubeTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(0.0f, -2.2616f, 99.249f));
+    // instances[1].transform = cubeTranslate * cubeScale * cubeRotate;
+
+    // auto shrekRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // auto shrekScale = glm::scale(glm::mat4(1.0f), glm::vec3(3415.008f, 3415.008f, 3415.008f));
+    // auto shrekTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(8.6977f, -1.104f, 72.618f));
+    // instances[2].transform = shrekTranslate * shrekScale * shrekRotate;
+
+    // auto campfireRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // auto campfireScale = glm::scale(glm::mat4(1.0f), glm::vec3(0.585f, 0.585f, 0.585f));
+    // auto campfireTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(0.0f, -1.0f, -119.0f));
+    // instances[3].transform = campfireTranslate * campfireScale * campfireRotate;
+
+    // auto cabanaRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // auto cabanaScale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+    // auto cabanaTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(0.0f, 0.0f, 0.0f));
+    // instances[4].transform = cabanaTranslate * cabanaScale * cabanaRotate;
+
+    // auto mesa1Rotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // auto mesa1Scale = glm::scale(glm::mat4(1.0f), glm::vec3(5.724f, 5.724f, 5.724f));
+    // auto mesa1Translate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(6.0f, -12.0f, 17.0f));
+    // instances[5].transform = mesa1Translate * mesa1Scale * mesa1Rotate;
+
+    // auto mesa2Rotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // auto mesa2Scale = glm::scale(glm::mat4(1.0f), glm::vec3(6.063f, 6.063f, 6.063f));
+    // auto mesa2Translate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(6.0f, 10.0f, 14.0f));
+    // instances[6].transform = mesa2Translate * mesa2Scale * mesa2Rotate;
+    
+    // auto poteRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // auto poteScale = glm::scale(glm::mat4(1.0f), glm::vec3(0.042f, 0.042f, 0.042f));
+    // auto poteTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(14.0f, -11.0f, 17.0f));
+    // instances[7].transform = poteTranslate * poteScale * poteRotate;
+
+    auto foxRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    auto foxScale = glm::scale(glm::mat4(1.0f), glm::vec3(0.156f, 0.156f, 0.156f));
+    auto foxTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(-2.0894f, -97.249f, 0.32917f));
+    instances[0].transform = glm::rotate(glm::mat4(1.0), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f)) * foxTranslate * foxScale * foxRotate;
+
+    auto cubeRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    auto cubeScale = glm::scale(glm::mat4(1.0f), glm::vec3(240.0f, 1.0f, 200.0f));
+    auto cubeTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(-2.2616f, 99.249f, 0.0f));
+    instances[1].transform = glm::rotate(glm::mat4(1.0), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f)) * cubeTranslate * cubeScale * cubeRotate;
+
+    auto shrekRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    auto shrekScale = glm::scale(glm::mat4(1.0f), glm::vec3(3415.008f, 3415.008f, 3415.008f));
+    auto shrekTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(-1.104f, 72.618f, 8.6977f));
+    instances[2].transform = glm::rotate(glm::mat4(1.0), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f)) * shrekTranslate * shrekScale * shrekRotate;
+
+    auto campfireRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    auto campfireScale = glm::scale(glm::mat4(1.0f), glm::vec3(0.585f, 0.585f, 0.585f));
+    auto campfireTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(-1.0f, -119.0f, 0.0f));
+    instances[3].transform = glm::rotate(glm::mat4(1.0), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f)) * campfireTranslate * campfireScale * campfireRotate;
+
+    auto cabanaRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    auto cabanaScale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+    auto cabanaTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(0.0f, 0.0f, 0.0f));
+    instances[4].transform = glm::rotate(glm::mat4(1.0), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f)) * cabanaTranslate * cabanaScale * cabanaRotate;
+
+    auto mesa1Rotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    auto mesa1Scale = glm::scale(glm::mat4(1.0f), glm::vec3(5.724f, 5.724f, 5.724f));
+    auto mesa1Translate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(-12.0f, 17.0f, 6.0f));
+    instances[5].transform = glm::rotate(glm::mat4(1.0), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f)) * mesa1Translate * mesa1Scale * mesa1Rotate;
+
+    auto mesa2Rotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    auto mesa2Scale = glm::scale(glm::mat4(1.0f), glm::vec3(6.063f, 6.063f, 6.063f));
+    auto mesa2Translate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(10.0f, 14.0f, 6.0f));
+    instances[6].transform = glm::rotate(glm::mat4(1.0), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f)) * mesa2Translate * mesa2Scale * mesa2Rotate;
+    
+
+    auto poteRotate = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    auto poteScale = glm::scale(glm::mat4(1.0f), glm::vec3(0.042f, 0.042f, 0.042f));
+    auto poteTranslate = glm::translate(glm::mat4(1.0f), meters * glm::vec3(-11.0f, 17.0f, 14.0f));
+    instances[7].transform = glm::rotate(glm::mat4(1.0), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f)) * poteTranslate * poteScale * poteRotate;
+    
+    
     f32 last_frame_time = 0.0f;
     f32 current_frame_time = 0.0f;
 

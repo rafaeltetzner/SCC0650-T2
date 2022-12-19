@@ -21,7 +21,32 @@ Camera::Camera(const glm::vec3& position, const glm::vec3& up, u32 width, u32 he
 
 glm::mat4 Camera::get_view() const
 {
-    return glm::lookAt(_position, _position + _front, _up);
+    float xLimit = 100;
+    float yLimit = 100;
+
+    glm::vec3 newPos;
+
+    if(_position[0] > xLimit){
+        newPos[0] = xLimit;
+    } else if(_position[0] < -xLimit){
+        newPos[0] = -xLimit;
+    } else {
+        newPos[0] = _position[0];
+    }
+
+    if(_position[2] > yLimit){
+        newPos[2] = yLimit;
+    } else if(_position[2] < -yLimit){
+        newPos[2] = -yLimit;
+    } else {
+        newPos[2] = _position[2];
+    }
+
+    newPos[1] = _position[1];
+    //newPos[1] = 0.0;
+
+    return glm::lookAt(newPos, newPos + _front, _up);
+    //return glm::lookAt(_position, _position + _front, _up);
 }
 
 f32 Camera::get_fov() const
